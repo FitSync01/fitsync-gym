@@ -1,0 +1,158 @@
+{
+  "project_name": "FitSync Gym",
+  "app_type": "hybrid_fullstack",
+  "theme": "dark",
+  "archetype": "Performance Pro",
+  "design_philosophy": {
+    "core_principles": [
+      "Tactical Minimalism: Replace soft shadows with 1px solid strokes or 2px 'Inner Glow' highlights.",
+      "High Visibility: Use Deep Obsidian as the primary anchor, Pure White for data clarity, and Electric Blaze as the kinetic trigger.",
+      "Command Center Feel: Dense data presentation optimized for quick scanning in active environments.",
+      "Motion & Interactivity: Meaningful feedback with controlled brightness. Fluid, subtle microinteractions to avoid harsh flashes."
+    ]
+  },
+  "colors": {
+    "background": {
+      "default": "#0A0A0A",
+      "surface": "#121212",
+      "surface_elevated": "#1C1C1E",
+      "overlay": "rgba(0,0,0,0.8)"
+    },
+    "primary": {
+      "default": "#FF3B30",
+      "hover": "#FF6B63",
+      "glow": "rgba(255, 59, 48, 0.3)"
+    },
+    "secondary": {
+      "default": "#007AFF",
+      "hover": "#3395FF"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A1A1AA",
+      "disabled": "#52525B",
+      "inverse": "#000000"
+    },
+    "border": {
+      "default": "#27272A",
+      "focus": "#FF3B30",
+      "subtle": "#18181B"
+    },
+    "status": {
+      "success": "#34C759",
+      "warning": "#FF9F0A",
+      "error": "#FF453A"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Barlow Condensed, Bebas Neue, or Oswald (Strong Condensed Sans)",
+      "body": "DM Sans, Inter, or Roboto (Geometric Sans)",
+      "mono": "JetBrains Mono or Roboto Mono (for metrics and data)"
+    },
+    "scales": {
+      "h1": "text-4xl sm:text-5xl font-black uppercase tracking-tighter leading-none",
+      "h2": "text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-tight",
+      "h3": "text-xl sm:text-2xl font-bold uppercase tracking-tight",
+      "body_large": "text-lg font-medium tracking-normal",
+      "body_base": "text-base font-normal tracking-normal text-zinc-300",
+      "body_small": "text-sm font-normal text-zinc-400",
+      "overline": "text-xs font-bold uppercase tracking-[0.2em] text-zinc-500"
+    }
+  },
+  "spacing_and_layout": {
+    "container_padding": "p-4 sm:p-6",
+    "section_gap": "gap-8 sm:gap-12",
+    "item_gap": "gap-4",
+    "border_radius": {
+      "small": "rounded-sm",
+      "default": "rounded-md",
+      "large": "rounded-lg (max 8px)",
+      "full": "rounded-full"
+    },
+    "grid_strategy": {
+      "dashboard": "grid-cols-1 md:grid-cols-3 gap-4. Every pixel utilized, no jagged bottoms.",
+      "marketing": "grid-cols-1 md:grid-cols-8 gap-8 with offset alignment and asymmetry."
+    }
+  },
+  "components": {
+    "cards": {
+      "style": "Flat background (surface), 1px subtle border (border-default), no soft drop shadows.",
+      "hover": "Slight lift (-translate-y-1), border color shifts to border-focus, subtle glow box-shadow."
+    },
+    "buttons": {
+      "primary": "bg-primary text-white font-bold uppercase tracking-wider rounded-md px-6 py-3",
+      "secondary": "bg-transparent border border-border text-white hover:border-white font-bold uppercase tracking-wider rounded-md px-6 py-3",
+      "ghost": "bg-transparent text-secondary-text hover:text-white px-4 py-2"
+    },
+    "inputs": {
+      "style": "bg-surface-elevated border border-border text-white px-4 py-3 rounded-md placeholder:text-zinc-600 focus:border-primary focus:ring-1 focus:ring-primary"
+    },
+    "navigation": {
+      "mobile": "Bottom tab bar with sharp active state indicators (1px red line above active icon).",
+      "desktop": "Left sidebar or top nav with Solid Background (0A0A0A) and 1px hard bottom/right border."
+    },
+    "badges": {
+      "style": "bg-surface-elevated border border-border text-xs uppercase tracking-widest px-2 py-1 rounded-sm"
+    }
+  },
+  "specific_views": {
+    "role_selection": {
+      "layout": "Full screen cinematic background image with black overlay (bg-black/60). Large typography, high-contrast action buttons for Owner, Staff, Member."
+    },
+    "owner_dashboard": {
+      "layout": "Dense 'Control Room' grid. Top row: KPI summary cards (col-span-1). Middle row: Revenue/Attendance Charts (col-span-2 or 3). Bottom: Quick actions & alerts."
+    },
+    "staff_dashboard": {
+      "layout": "Action-oriented. Massive 'Scan QR' primary button taking up significant real-estate. Fast search input for manual check-ins."
+    },
+    "member_dashboard": {
+      "layout": "Progress-oriented. Highlight current plan status, active streak, and upcoming classes with high-visibility neon accents."
+    },
+    "qr_scanner": {
+      "ui": "Camera view with a precise, technical targeting reticle overlay (4 corners in Electric Blaze). Minimal UI overlay to focus on scanning."
+    }
+  },
+  "motion": {
+    "transitions": "Fast and punchy (150ms-200ms ease-out).",
+    "loaders": "Technical spinners or minimal progress bars (Electric Blaze). Avoid bouncy/playful loading animations."
+  },
+  "media": {
+    "guidelines": "Overlay images with bg-black/60 or gradient to ensure text contrast. Use grayscale images with high contrast, let the UI colors (red/blue) pop against them.",
+    "urls": {
+      "hero_onboarding": {
+        "url": "https://images.pexels.com/photos/14055664/pexels-photo-14055664.jpeg",
+        "description": "Powerful female athlete in front of neon lights. Use for login/registration/role selection screens.",
+        "category": "hero"
+      },
+      "secondary_hero": {
+        "url": "https://images.pexels.com/photos/4752861/pexels-photo-4752861.jpeg",
+        "description": "Muscular man using heavy ropes. Use for member dashboard banner or fitness motivation sections.",
+        "category": "hero"
+      },
+      "avatar_placeholder": {
+        "url": "https://images.pexels.com/photos/5327531/pexels-photo-5327531.jpeg",
+        "description": "Strong man lifting weights. Use as a placeholder for trainer or premium member avatars.",
+        "category": "avatar"
+      },
+      "texture_background": {
+        "url": "https://images.pexels.com/photos/36013164/pexels-photo-36013164.png",
+        "description": "Close-up of a textured black surface. Use with low opacity (10-15%) over #0A0A0A to add grit to empty states or card backgrounds.",
+        "category": "background"
+      }
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure 4.5:1 ratio for body text, 3:1 for large text. Use pure white against #0A0A0A or #121212.",
+    "focus_states": "All interactable elements must have an explicit focus ring: focus:ring-2 focus:ring-primary focus:outline-none.",
+    "testing": "All interactive and key informational elements MUST include a data-testid attribute (e.g., data-testid='role-select-owner-btn')."
+  },
+  "instructions_to_main_agent": [
+    "Use 'react-native-safe-area-context' for proper padding on mobile devices.",
+    "Since this is an Expo React Native app, adapt Tailwind classes via NativeWind or equivalent, mapping CSS variables to StyleSheet.",
+    "Do NOT use pure white backgrounds anywhere. The theme is strictly dark mode (Performance Pro).",
+    "Use the provided image URLs exclusively for media placeholders.",
+    "All forms/inputs should have large tap targets (minimum 44x44px) for mobile usability.",
+    "Implement charts (for Owner/Admin Dashboards) using a React Native compatible library (e.g., react-native-chart-kit or victory-native) applying the brand colors."
+  ]
+}
