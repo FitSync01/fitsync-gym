@@ -12,6 +12,7 @@ from datetime import datetime, timezone, timedelta
 from pydantic import BaseModel
 from typing import Optional, List
 from contextlib import asynccontextmanager
+from urllib.parse import quote, unquote
 from google import genai
 from google.genai import types as genai_types
 from google.auth.transport import requests as google_requests
@@ -28,8 +29,32 @@ def env_flag(name: str, default: bool = False) -> bool:
         return default
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
+def normalize_mongo_url(uri: str) -> str:
+    uri = (uri or "").strip()
+    if not uri:
+        raise RuntimeError("MONGO_URL environment variable is required")
+    if not (uri.startswith("mongodb://") or uri.startswith("mongodb+srv://")):
+        return uri
 
-mongo_url = os.environ['MONGO_URL']
+    scheme, rest = uri.split("://", 1)
+    authority, sep, path = rest.partition("/")
+    if "@" not in authority:
+        return uri
+
+    credentials, host = authority.rsplit("@", 1)
+    if ":" not in credentials:
+        return uri
+
+    username, password = credentials.split(":", 1)
+    normalized_username = quote(unquote(username), safe="")
+    normalized_password = quote(unquote(password), safe="")
+    normalized = f"{scheme}://{normalized_username}:{normalized_password}@{host}"
+    if sep:
+        normalized += f"/{path}"
+    return normalized
+
+
+mongo_url = normalize_mongo_url(os.environ.get("MONGO_URL"))
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'fitsync_gym')]
 JWT_SECRET = os.environ.get('JWT_SECRET', secrets.token_hex(32))
@@ -160,20 +185,24 @@ from seed import seed_database
 # ─── Lifespan ─────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await db.users.create_index("email", unique=True)
-    await db.users.create_index("user_id", unique=True)
-    await db.users.create_index("google_sub", unique=True, sparse=True)
-    await db.gyms.create_index("gym_id", unique=True)
-    await db.gyms.create_index("code")
-    await db.members.create_index([("gym_id", 1), ("member_id", 1)])
-    await db.members.create_index([("gym_id", 1), ("user_id", 1)])
-    await db.attendance_logs.create_index([("gym_id", 1), ("timestamp", -1)])
-    await db.payments.create_index([("gym_id", 1), ("paid_at", -1)])
-    if SEED_DATABASE:
-        await seed_database(db)
-    else:
-        logger.info("Skipping seed data because SEED_DATABASE is disabled")
-    logger.info("FitSync Gym API started")
+    try:
+        await db.users.create_index("email", unique=True)
+        await db.users.create_index("user_id", unique=True)
+        await db.users.create_index("google_sub", unique=True, sparse=True)
+        await db.gyms.create_index("gym_id", unique=True)
+        await db.gyms.create_index("code")
+        await db.members.create_index([("gym_id", 1), ("member_id", 1)])
+        await db.members.create_index([("gym_id", 1), ("user_id", 1)])
+        await db.attendance_logs.create_index([("gym_id", 1), ("timestamp", -1)])
+        await db.payments.create_index([("gym_id", 1), ("paid_at", -1)])
+        if SEED_DATABASE:
+            await seed_database(db)
+        else:
+            logger.info("Skipping seed data because SEED_DATABASE is disabled")
+        logger.info("FitSync Gym API started")
+    except Exception:
+        logger.exception("Startup failed while connecting to MongoDB or preparing database indexes")
+        raise
     yield
     client.close()
 
